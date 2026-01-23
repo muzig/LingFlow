@@ -106,7 +106,7 @@ export function ArticleContent() {
       const touch = e.touches[0];
       const element = document.elementFromPoint(touch.clientX, touch.clientY);
       
-      if (element && element.nodeType === Node.TEXT_NODE || element.textContent) {
+      if (element && (element.nodeType === Node.TEXT_NODE || element.textContent)) {
         // 尝试选择触摸点的单词
         const range = document.caretRangeFromPoint(touch.clientX, touch.clientY);
         if (range) {
@@ -188,9 +188,9 @@ export function ArticleContent() {
   if (!currentArticle) return null;
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col overflow-hidden">
       {/* 头部 */}
-      <header className="border-b px-4 md:px-6 py-3 md:py-4 flex items-center gap-3 md:gap-4">
+      <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 flex items-center gap-3 md:gap-4 bg-background">
         <Button variant="ghost" size="icon" onClick={handleBack} className="h-9 w-9 md:h-10 md:w-10">
           <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
         </Button>
@@ -212,7 +212,12 @@ export function ArticleContent() {
       </header>
 
       {/* 文章内容 */}
-      <div className="flex-1 overflow-auto pb-16 md:pb-0">
+      <div 
+        className="flex-1 overflow-auto"
+        style={{
+          paddingBottom: 'calc(env(safe-area-inset-bottom) + 4rem)', // 底部导航 + 安全区域
+        }}
+      >
         <div
           ref={contentRef}
           className="max-w-3xl mx-auto px-4 md:px-6 py-4 md:py-8"

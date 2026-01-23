@@ -130,11 +130,96 @@ input, textarea { font-size: 16px; }
 - **Tauri 2**
 - **响应式设计**: 移动优先 + md断点
 
+## 最新更新：iOS 安全区域修复 ✅
+
+### 问题
+内容会滚动到灵动岛（Dynamic Island）下方被遮挡
+
+### 解决方案
+
+#### 1. Layout 层级优化
+```tsx
+// Layout.tsx
+<div style={{
+  paddingTop: 'env(safe-area-inset-top)',
+  paddingBottom: 'env(safe-area-inset-bottom)',
+}}>
+```
+
+- 在最外层容器添加安全区域padding
+- 确保内容不会被状态栏/灵动岛遮挡
+
+#### 2. 各页面滚动容器优化
+
+**统一结构：**
+```tsx
+<div className="h-full flex flex-col overflow-hidden">
+  {/* 固定头部 */}
+  <header className="flex-shrink-0 bg-background">
+    ...
+  </header>
+  
+  {/* 可滚动内容 */}
+  <div 
+    className="flex-1 overflow-auto"
+    style={{
+      paddingBottom: 'calc(1rem + env(safe-area-inset-bottom) + 4rem)',
+    }}
+  >
+    ...
+  </div>
+</div>
+```
+
+**关键点：**
+- 外层容器：`overflow-hidden`（防止多重滚动）
+- 头部：`flex-shrink-0`（固定不动）
+- 内容区：`overflow-auto` + 动态底部padding
+
+#### 3. 底部导航栏优化
+```tsx
+// Sidebar.tsx (移动端底部导航)
+<nav style={{
+  paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom))',
+}}>
+```
+
+#### 4. CSS 优化
+```css
+/* 使用动态视口高度 */
+html, body, #root {
+  height: 100vh;
+  height: 100dvh; /* 动态视口高度，排除浏览器UI */
+}
+```
+
+### 技术细节
+
+#### 安全区域计算公式
+```
+移动端底部padding = 内容padding + 安全区域 + 底部导航高度
+                  = 1rem + env(safe-area-inset-bottom) + 4rem
+```
+
+#### 桌面端处理
+- 使用CSS类：`md:pb-0`
+- 桌面端不需要额外的底部padding
+- 安全区域在桌面端为0，不影响布局
+
+### 受影响的组件
+- ✅ Layout.tsx - 顶部和底部安全区域
+- ✅ Sidebar.tsx - 底部导航安全区域
+- ✅ ArticleContent.tsx - 滚动容器优化
+- ✅ VocabularyPage.tsx - 滚动容器优化
+- ✅ ReviewPage.tsx - 滚动容器优化
+- ✅ ReaderPage.tsx - 滚动容器优化
+
 ## 已知限制
 
 1. iOS Safari的文本选择行为可能因版本而异
 2. 某些第三方浏览器可能有不同的选择行为
 3. 建议在真机上测试，模拟器可能表现不一致
+4. 动态视口高度（dvh）在较老的iOS版本可能不支持（iOS 15.4+）
 
 ## 后续优化建议
 
@@ -142,3 +227,4 @@ input, textarea { font-size: 16px; }
 2. 支持iPad多任务模式
 3. 添加深色模式优化
 4. 考虑横屏模式的专门优化
+5. 添加下拉刷新功能（移动端）

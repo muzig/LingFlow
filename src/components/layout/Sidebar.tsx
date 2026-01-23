@@ -52,7 +52,12 @@ export function Sidebar() {
       </aside>
 
       {/* 移动端底部导航栏 */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-card border-t flex items-center justify-around px-2 py-2 safe-area-inset-bottom">
+      <nav 
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-card border-t flex items-center justify-around px-2 py-2"
+        style={{
+          paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom))',
+        }}
+      >
         {navItems.map((item) => (
           <NavLink
             key={item.to}

@@ -5,10 +5,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 export function Layout() {
   return (
     <TooltipProvider>
-      <div className="h-screen flex overflow-hidden">
+      <div 
+        className="h-screen flex overflow-hidden"
+        style={{
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}
+      >
         <Sidebar />
-        {/* 主内容区域，移动端底部留出导航栏空间 */}
-        <main className="flex-1 overflow-auto pb-0 md:pb-0">
+        {/* 主内容区域 */}
+        <main className="flex-1 overflow-hidden flex flex-col">
           <Outlet />
         </main>
       </div>

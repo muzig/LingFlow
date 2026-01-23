@@ -51,8 +51,8 @@ export function ReviewPage() {
   // 没有可复习的词汇
   if (words.length === 0) {
     return (
-      <div className="h-full flex flex-col pb-16 md:pb-0">
-        <header className="border-b px-4 md:px-6 py-3 md:py-4">
+      <div className="h-full flex flex-col overflow-hidden">
+        <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 bg-background">
           <h1 className="text-lg md:text-xl font-semibold">每日复习</h1>
           <p className="text-xs md:text-sm text-muted-foreground mt-1">
             巩固你的技术词汇
@@ -72,8 +72,8 @@ export function ReviewPage() {
   // 复习完成
   if (completed) {
     return (
-      <div className="h-full flex flex-col pb-16 md:pb-0">
-        <header className="border-b px-4 md:px-6 py-3 md:py-4">
+      <div className="h-full flex flex-col overflow-hidden">
+        <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 bg-background">
           <h1 className="text-lg md:text-xl font-semibold">每日复习</h1>
           <p className="text-xs md:text-sm text-muted-foreground mt-1">
             巩固你的技术词汇
@@ -104,8 +104,8 @@ export function ReviewPage() {
   }
 
   return (
-    <div className="h-full flex flex-col pb-16 md:pb-0">
-      <header className="border-b px-4 md:px-6 py-3 md:py-4">
+    <div className="h-full flex flex-col overflow-hidden">
+      <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 bg-background">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-lg md:text-xl font-semibold">每日复习</h1>
@@ -131,7 +131,12 @@ export function ReviewPage() {
         </div>
       </header>
 
-      <div className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-auto">
+      <div 
+        className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-auto"
+        style={{
+          paddingBottom: 'calc(1rem + env(safe-area-inset-bottom) + 4rem)',
+        }}
+      >
         {currentWord && (
           <Card className="w-full max-w-2xl">
             <CardHeader className="p-4 md:p-6">

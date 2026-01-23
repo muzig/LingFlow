@@ -35,8 +35,8 @@ export function VocabularyPage() {
   };
 
   return (
-    <div className="h-full flex flex-col pb-16 md:pb-0">
-      <header className="border-b px-4 md:px-6 py-3 md:py-4">
+    <div className="h-full flex flex-col overflow-hidden">
+      <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 bg-background">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0">
           <div>
             <h1 className="text-lg md:text-xl font-semibold">生词本</h1>
@@ -56,7 +56,12 @@ export function VocabularyPage() {
         </div>
       </header>
 
-      <div className="flex-1 overflow-auto p-4 md:p-6">
+      <div 
+        className="flex-1 overflow-auto p-4 md:p-6"
+        style={{
+          paddingBottom: 'calc(1rem + env(safe-area-inset-bottom) + 4rem)', // padding + 安全区域 + 底部导航
+        }}
+      >
         {displayWords.length === 0 ? (
           <div className="h-full flex items-center justify-center text-muted-foreground px-4">
             {search ? (

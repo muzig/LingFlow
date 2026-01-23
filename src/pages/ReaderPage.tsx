@@ -32,15 +32,20 @@ export function ReaderPage() {
 
   // 否则显示输入界面
   return (
-    <div className="h-full flex flex-col pb-16 md:pb-0">
-      <header className="border-b px-4 md:px-6 py-3 md:py-4">
+    <div className="h-full flex flex-col overflow-hidden">
+      <header className="flex-shrink-0 border-b px-4 md:px-6 py-3 md:py-4 bg-background">
         <h1 className="text-lg md:text-xl font-semibold">技术英语阅读器</h1>
         <p className="text-xs md:text-sm text-muted-foreground mt-1">
           粘贴 URL 或文本开始阅读，划词即可查看解释
         </p>
       </header>
 
-      <div className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-auto">
+      <div 
+        className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-auto"
+        style={{
+          paddingBottom: 'calc(1rem + env(safe-area-inset-bottom) + 4rem)',
+        }}
+      >
         <div className="w-full max-w-2xl">
           <Tabs defaultValue="url" className="w-full">
             <TabsList className="grid w-full grid-cols-2 h-10 md:h-11">
