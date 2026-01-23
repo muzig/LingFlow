@@ -1,6 +1,6 @@
 name: techn-eng
 options:
-  bundleIdPrefix: com.muzig.techn-eng
+  bundleIdPrefix: com.muzig.techneng.dev
   deploymentTarget:
     iOS: 14.0
 fileGroups: [../../src]
@@ -11,7 +11,8 @@ settingGroups:
   app:
     base:
       PRODUCT_NAME: techn-eng
-      PRODUCT_BUNDLE_IDENTIFIER: com.muzig.techn-eng
+      PRODUCT_BUNDLE_IDENTIFIER: com.muzig.techneng.dev
+      DEVELOPMENT_TEAM: SHDV57HB47
 targetTemplates:
   app:
     type: application

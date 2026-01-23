@@ -51,6 +51,28 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
+    /* 启用移动端文本选择 */
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    user-select: text;
+    /* iOS优化：防止双击缩放，但保留文本选择 */
+    touch-action: manipulation;
+    /* 优化字体渲染 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* 支持iOS安全区域 */
+  html,
+  body {
+    height: 100vh;
+    /* 支持刘海屏等设备 */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* 移动端安全区域适配 */
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Custom scrollbar */
@@ -70,40 +92,94 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/50;
   }
+  
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    /* 在移动端减小滚动条宽度 */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    
+    /* 优化触摸反馈 */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* 优化移动端文本选择 */
+    p, span, div, article {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    
+    /* 防止iOS双击缩放文本框 */
+    input, textarea, select {
+      font-size: 16px;
+    }
+  }
+  
+  /* iOS特定优化 */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS设备上启用文本选择 */
+    body {
+      -webkit-touch-callout: default;
+    }
+    
+    /* 优化长按选择 */
+    .prose p,
+    .prose span,
+    .prose li {
+      -webkit-touch-callout: default;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+  }
 }
 
 /* Prose styles for article content */
 .prose {
   @apply text-foreground max-w-none;
+  /* 启用文本选择 */
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .prose h1 {
-  @apply text-3xl font-bold mt-8 mb-4;
+  @apply text-2xl md:text-3xl font-bold mt-6 md:mt-8 mb-3 md:mb-4;
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold mt-6 mb-3;
+  @apply text-xl md:text-2xl font-semibold mt-5 md:mt-6 mb-2.5 md:mb-3;
 }
 
 .prose h3 {
-  @apply text-xl font-semibold mt-5 mb-2;
+  @apply text-lg md:text-xl font-semibold mt-4 md:mt-5 mb-2;
 }
 
 .prose h4 {
-  @apply text-lg font-medium mt-4 mb-2;
+  @apply text-base md:text-lg font-medium mt-3 md:mt-4 mb-2;
 }
 
 .prose p {
-  @apply my-4 leading-7;
+  @apply my-3 md:my-4 leading-7 md:leading-7 text-[15px] md:text-base;
+  /* 移动端优化行高和字间距 */
+  @media (max-width: 768px) {
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
 }
 
 .prose a {
   @apply text-primary underline underline-offset-4 hover:text-primary/80;
+  /* 移动端增大触摸区域 */
+  @media (max-width: 768px) {
+    padding: 2px 0;
+  }
 }
 
 .prose ul,
 .prose ol {
-  @apply my-4 pl-6;
+  @apply my-3 md:my-4 pl-5 md:pl-6;
 }
 
 .prose ul {
@@ -115,42 +191,72 @@
 }
 
 .prose li {
-  @apply my-1;
+  @apply my-1 text-[15px] md:text-base;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-muted-foreground/30 pl-4 italic my-4;
+  @apply border-l-4 border-muted-foreground/30 pl-3 md:pl-4 italic my-3 md:my-4 text-sm md:text-base;
 }
 
 .prose code {
-  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+  @apply bg-muted px-1.5 py-0.5 rounded text-xs md:text-sm font-mono;
+  /* 防止代码块内的文本被选择时出现问题 */
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .prose pre {
-  @apply bg-muted p-4 rounded-lg overflow-x-auto my-4;
+  @apply bg-muted p-3 md:p-4 rounded-lg overflow-x-auto my-3 md:my-4;
+  /* 移动端代码块横向滚动优化 */
+  -webkit-overflow-scrolling: touch;
 }
 
 .prose pre code {
-  @apply bg-transparent p-0;
+  @apply bg-transparent p-0 text-xs md:text-sm;
 }
 
 .prose img {
-  @apply rounded-lg my-4;
+  @apply rounded-lg my-3 md:my-4 w-full h-auto;
 }
 
 .prose hr {
-  @apply border-border my-8;
+  @apply border-border my-6 md:my-8;
 }
 
 .prose table {
-  @apply w-full my-4 border-collapse;
+  @apply w-full my-3 md:my-4 border-collapse text-sm md:text-base;
+  /* 移动端表格优化 */
+  @media (max-width: 768px) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .prose th,
 .prose td {
-  @apply border border-border px-4 py-2 text-left;
+  @apply border border-border px-2 md:px-4 py-1.5 md:py-2 text-left;
 }
 
 .prose th {
   @apply bg-muted font-semibold;
+}
+
+/* 移动端prose额外优化 */
+@media (max-width: 768px) {
+  .prose-sm {
+    @apply text-sm;
+  }
+  
+  .prose-sm h1 {
+    @apply text-xl;
+  }
+  
+  .prose-sm h2 {
+    @apply text-lg;
+  }
+  
+  .prose-sm h3 {
+    @apply text-base;
+  }
 }

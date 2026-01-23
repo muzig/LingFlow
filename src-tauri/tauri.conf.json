@@ -5,7 +5,7 @@
   "identifier": "com.muzig.techneng.dev",
   "build": {
     "beforeDevCommand": "pnpm dev",
-    "devUrl": "http://localhost:1420",
+    "devUrl": "http://192.168.31.97:1420",
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../dist"
   },
@@ -32,10 +32,7 @@
       "icons/icon.ico"
     ],
     "iOS": {
-      "developmentTeam": "M749NN6Z2N",
-      "infoPlist": {
-        "NSLocalNetworkUsageDescription": "We need to access local network to connect to the development server for debugging."
-      }
+      "developmentTeam": "SHDV57HB47"
     }
   }
 }
