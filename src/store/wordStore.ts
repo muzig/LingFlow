@@ -103,7 +103,7 @@ export const useWordStore = create<WordState>()(
       },
     }),
     {
-      name: "techn-eng-words",
+      name: "lingflow-words",
     }
   )
 );

@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    techn_eng_lib::run()
+    lingflow_lib::run()
 }

@@ -3,7 +3,7 @@
 ### 项目结构
 
 ```
-techn-eng/
+LingFlow/
 ├── src/                          # React 前端
 │   ├── components/
 │   │   ├── layout/               # 布局组件
@@ -50,7 +50,6 @@ techn-eng/
 ### 运行方式
 
 ```bash
-cd techn-eng
 pnpm tauri dev   # 开发模式
 pnpm tauri build # 构建生产版本
 ```
