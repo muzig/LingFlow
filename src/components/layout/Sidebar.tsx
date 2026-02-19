@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { BookOpen, Library, GraduationCap } from "lucide-react";
+import { BookOpen, Library, GraduationCap, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -7,6 +7,11 @@ const navItems = [
     to: "/",
     icon: BookOpen,
     label: "阅读",
+  },
+  {
+    to: "/saved",
+    icon: Bookmark,
+    label: "收藏",
   },
   {
     to: "/vocabulary",
